@@ -1,0 +1,49 @@
+	<!-- Add Product -->
+    <section id="addProductForm" class="section">
+        <h2>Add Product</h2>
+        <form id="AddProduct">
+            <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="Name">
+            </div>
+            <div class="mb-3">
+                <label for="productImage" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="productImage" name="Image">
+            </div>
+            <div class="mb-3">
+                <label for="productPrice" class="form-label">Product Price</label>
+                <input type="number" class="form-control" id="productPrice" name="Price">
+            </div>
+            <div class="mb-3">
+                <label for="productDescription" class="form-label">Product Description</label>
+                <textarea class="form-control" id="productDescription" name="Description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="productDiscount" class="form-label">Product Discount</label>
+                <input type="number" class="form-control" id="productDiscount" name="PriceWithDiscount">
+            </div>
+            <div class="mb-3">
+                <label for="productBrand" class="form-label" name="Brand">Product Brand</label>
+                <input type="text" class="form-control" id="productBrand">
+            </div>
+            <button type="submit" class="btn btn-custom" onclick="addproduct()">Add Product</button>
+            <button type="button" class="btn btn-secondary" onclick="showSection('productSection')">Cancel</button>
+        </form>
+    </section>
+
+    <script>
+async function EditProduct(id){
+
+    const url=`https://localhost:44367/api/AdminControllers/Product?id=${id}`;
+    
+    var form=document.getElementById("form");
+        // هاي بتمنع يصير ريللود على صفحة ثانية
+    event.preventDefault();
+    var formData= new FormData(form);
+    let response=await fetch(url,{
+        method:"PUT",
+        body:formData,
+    });
+    var data=await response.json();
+    }
+</script>

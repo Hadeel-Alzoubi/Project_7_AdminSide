@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Chat Interface</title>
+    <!-- Include your CSS and JS libraries here -->
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Admin Chat Interface</h2>
+        
+        <!-- Container for displaying messages -->
+        <div id="messages-list" style="border: 1px solid black; height: 400px; overflow-y: scroll;">
+        </div>
+    </div>
+
+    <p id="messages-container" style="border: 1px solid black; height: 400px; overflow-y: scroll;">
+    </p>
+
+    <script>
+        // دالة لجلب جميع الرسائل من اليوزر وعرضها للإدمن
+        async function fetchMessagesForAdmin() {
+
+            debugger;
+            try {
+                const response = await fetch('https://localhost:44367/api/AdminControllers/messages/Chat');
+                const responseAdmin = await fetch('https://localhost:44367/api/AdminControllers/admin/messages');
+
+                // تحقق من نجاح الطلب
+                if (!response.ok) {
+                    console.error("Failed to fetch messages. Status:", response.status);
+                    return;
+                }
+
+                const data = await response.json();
+                const messagesList = document.getElementById('messages-list');
+                messagesList.innerHTML = '';
+
+                // عرض الرسائل مع إضافة textarea للرد عليها
+                data.forEach(message => {
+                    messagesList.innerHTML += `
+                        <div class="message" id="message-${message.id}">
+                            <p><strong>${message.sender}:</strong> ${message.messageContent}</p>
+                            <p><em>وقت الإرسال: ${new Date(message.timestamp).toLocaleString()}</em></p>
+                            <p></p>
+                            <textarea id="reply-${message.id}" placeholder="اكتب ردك هنا..."></textarea>
+                            <button onclick="sendReply(${message.id})">إرسال رد</button>
+                        </div>
+                    `;
+                });
+
+
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        }
+
+        // دالة لإرسال الرد من الإدمن إلى اليوزر
+        async function sendReply(messageId) {
+            const replyContent = document.getElementById(`reply-${messageId}`).value;
+
+            if (replyContent.trim() === "") {
+                alert("الرد لا يمكن أن يكون فارغًا.");
+                return;
+            }
+
+            try {
+                const response = await fetch('https://localhost:44367/api/AdminControllers/admin/reply', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messageId: messageId,
+                        sender: 'Admin',  // الإدمن هو المرسل
+                        recipient: 'User',  // اليوزر هو المستلم
+                        messageContent: replyContent
+                    })
+                });
+
+                // تحقق من نجاح الطلب
+                if (response.ok) {
+                    alert("تم إرسال الرد بنجاح!");
+                    fetchMessagesForAdmin(); // إعادة تحميل الرسائل بعد الإرسال
+                } else {
+                    console.error('Error response from server:', response.statusText);
+                    alert("فشل في إرسال الرد. حاول مرة أخرى.");
+                }
+            } catch (error) {
+                console.error('Error sending reply:', error);
+                alert("حدث خطأ أثناء محاولة إرسال الرد.");
+            }
+        }
+
+        async function loadMessages() {
+            try {
+                const response = await fetch('https://localhost:44367/api/AdminControllers/admin/messages', {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                const messagesContainer = document.getElementById('messages-container');
+                messagesContainer.innerHTML = "";
+
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.innerHTML = `<strong>${message.sender}:</strong> ${message.messageContent}`;
+                    
+                    // إذا كان الإدمن هو الذي يرسل الرسالة، نضيف textarea لكتابة الرد
+                    if (message.sender !== 'Admin') {
+                        messageElement.innerHTML += `
+                            <p>
+                                <textarea id="reply-${message.id}" placeholder="اكتب ردك هنا..."></textarea>
+                                <button onclick="sendReply(${message.id})">إرسال رد</button>
+                            </p>
+                        `;
+                    }
+
+                    messagesContainer.appendChild(messageElement);
+                });
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        }
+
+        loadMessages()
+        // تحميل الرسائل عند تحميل الصفحة
+        fetchMessagesForAdmin();
+    </script>
+</body>
+</html>

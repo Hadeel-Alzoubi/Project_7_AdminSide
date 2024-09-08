@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin and User Chat</title>
+    <!-- Include your CSS and JS libraries here -->
+</head>
+<body>
+    <div class="chat-container">
+        <h2>User Chat</h2>
+        
+        <!-- Container for displaying messages -->
+        <div id="messages-container" style="border: 1px solid black; height: 400px; overflow-y: scroll;">
+        </div>
+
+        <!-- Form for sending messages -->
+        <div class="message-input">
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <textarea id="chat-message" placeholder="Enter your message..." required></textarea>
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
+
+    <script>
+        // إرسال الرسالة من اليوزر أو الإدمن
+        async function sendMessage() {
+            const message = document.getElementById('chat-message').value;
+            const senderName = document.getElementById('name').value;
+            
+            if (message.trim() !== "") {
+                const messageData = {
+                    sender: senderName,
+                    recipient: "Admin", // هنا يتم تحديد المستلم إذا كان الإدمن أو اليوزر
+                    messageContent: message
+                };
+
+                await fetch('https://localhost:44367/api/AdminControllers/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(messageData)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert("تم إرسال الرسالة بنجاح!");
+                    document.getElementById('chat-message').value = "";
+                    loadMessages(); // إعادة تحميل الرسائل بعد الإرسال
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        // دالة تحميل جميع الرسائل بين اليوزر والإدمن
+        async function loadMessages() {
+            try {
+                const response = await fetch('https://localhost:44367/api/AdminControllers/admin/messages', {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                const messagesContainer = document.getElementById('messages-container');
+                messagesContainer.innerHTML = "";
+
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.innerHTML = `<strong>${message.sender}:</strong> ${message.messageContent}`;
+                    
+                    // إذا كان الإدمن هو الذي يرسل الرسالة، نضيف textarea لكتابة الرد
+                    if (message.sender !== 'Admin') {
+                        messageElement.innerHTML += `
+                            <div>
+                                <textarea id="reply-${message.id}" placeholder="اكتب ردك هنا..."></textarea>
+                                <button onclick="sendReply(${message.id})">إرسال رد</button>
+                            </div>
+                        `;
+                    }
+
+                    messagesContainer.appendChild(messageElement);
+                });
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        }
+
+        // الرد على الرسائل من قبل الإدمن
+        async function sendReply(messageId) {
+            const replyContent = document.getElementById(`reply-${messageId}`).value;
+
+            if (replyContent.trim() !== "") {
+                await fetch('https://localhost:44367/api/AdminControllers/admin/reply', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messageId: messageId,
+                        sender: 'Admin',
+                        recipient: 'User', // الرد سيذهب إلى اليوزر
+                        messageContent: replyContent
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert("تم إرسال الرد بنجاح!");
+                    loadMessages(); // إعادة تحميل الرسائل بعد الإرسال
+                })
+                .catch(error => {
+                    console.error('Error sending reply:', error);
+                });
+            }
+        }
+
+        // تحميل الرسائل عند تحميل الصفحة
+        loadMessages();
+
+    </script>
+</body>
+</html>
