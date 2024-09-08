@@ -437,21 +437,46 @@
 <script src="../assets/js/theme.min.js"></script>
 <script>
  async function EditCategory() {
-    event.preventDefault();
-    debugger;
+    // Prevent form submission from reloading the page
+    
+    
+    // Get the form element
     var form = document.getElementById("formProfil");
-    const url = `https://localhost:44367/api/AdminControllers/AdminEdit/1`;
 
+    // Define the API URL (you might want to make the `1` dynamic)
+    const url = `https://localhost:44367/api/AdminControllers/AdminEdit?id=1`;
+
+    // Create a FormData object from the form
     var formData = new FormData(form);
     
+    // Log formData to check content (for debugging purposes)
     console.log(formData);
-    console.log(formData.get("Img")); 
-        let response =await fetch(url, {
+    console.log(formData.get("Img"));  // Ensure the image field has correct name
+    
+    try {
+        // Send the PUT request with the form data
+        let response = await fetch(url, {
             method: "PUT",
-            body: formData, 
-		});
-		var data = await response.json(); 
-		}
+            body: formData
+        });
+
+        // Check if the response is OK
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse the JSON response
+        var data = await response.json(); 
+        
+        // Handle the data (log it for now)
+        console.log(data);
+
+    } catch (error) {
+        // Log any errors that occur during the fetch
+        console.error("Error occurred during fetch:", error);
+    }
+}
+
 </script>
   </body>
 
