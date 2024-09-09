@@ -228,12 +228,12 @@
 						<li class="nav-item">
 							<a class="nav-link has-arrow " href="ecommerce-category-edit.html">Category</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a class="nav-link has-arrow " href="ecommerce-order-list.html">Orders</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link has-arrow " href="ecommerce-order-detail.html">Orders Detail</a>
-						</li>
+						</li> -->
 						<li class="nav-item">
 							<a class="nav-link has-arrow " href="ecommerce-customer.html">Customer</a>
 						</li>
@@ -287,59 +287,101 @@
                 <section id="CategorySection" class="section active">
 					<h2>Category</h2>
 					<div class="search-bar mb-3">
-						<button class="btn btn-custom" onclick="showSection('addCategoryForm')">+ Add Category</button>
+
+						<button class="btn btn-primary" onclick="showSection('addCategoryForm')">Add Category</button>
+
+						<!-- <button class="btn btn-custom" onclick="showModal()">+ Add Category</button> -->
 						<input type="search" class="form-control" placeholder="Search Categorys...">
 					</div>
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>Category</th>
-								<!-- <th>Category</th> -->
+								<th>Image</th>
 								<th>Name</th>
-								<th>Price</th>
-								<th>Status</th>
+								<th>description</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody id="Category">
 						  
 						</tbody>
+						
 					</table>
+					
 				</section>
 
+				<!-- Modal for Edit Category -->
+				<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<!-- Form inside modal -->
+								<form id="form" onsubmit="EditCategory(event)">
+									<div class="form-group">
+										<label for="CategoryImage">Category Image</label>
+										<input type="file" class="form-control" id="CategoryImage" name="Image">
+									</div>
+		  
+									<div class="form-group">
+										<label for="CategoryName">Category Name</label>
+										<input type="text" class="formCategoryName-control form-control" id="CategoryName" name="Name" placeholder="Enter category name">
+									</div>
+		  
+									<button type="submit" class="btn btn-primary btn-block">Submit</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+		  
 				<!-- Add Product -->
-				<section id="addCategoryForm" class="section">
-					<h2>Add Category</h2>
-					<form id="AddCategory">
+				<!-- <section id="addCategoryForm" class="section">
+					<h2>Add category</h2>
+					<form id="AddProduct">
 						<div class="mb-3">
-							<label for="CategoryName" class="form-label">Category Name</label>
-							<input type="text" class="form-control" id="CategoryName" name="Name">
+							<label for="productName" class="form-label">Product Name</label>
+							<input type="text" class="form-control" id="productName" name="name">
 						</div>
 						<div class="mb-3">
-							<label for="CategoryImage" class="form-label">Category Image</label>
-							<input type="file" class="form-control" id="CategoryImage" name="Image">
+							<label for="productImage" class="form-label">Product Image</label>
+							<input type="file" class="form-control" id="productImage" name="image">
 						</div>
+					
 						<div class="mb-3">
-							<label for="CategoryPrice" class="form-label">Category Price</label>
-							<input type="number" class="form-control" id="CategoryPrice" name="Price">
+							<label for="productDescription" class="form-label">Product Description</label>
+							<textarea class="form-control" id="productDescription" name="description"></textarea>
 						</div>
-						<div class="mb-3">
-							<label for="CategoryDescription" class="form-label">Category Description</label>
-							<textarea class="form-control" id="CategoryDescription" name="Description"></textarea>
-						</div>
-						<div class="mb-3">
-							<label for="CategoryDiscount" class="form-label">Category Discount</label>
-							<input type="number" class="form-control" id="CategoryDiscount" name="PriceWithDiscount">
-						</div>
-						<div class="mb-3">
-							<label for="CategoryBrand" class="form-label" name="Brand">Category Brand</label>
-							<input type="text" class="form-control" id="CategoryBrand">
-						</div>
-						<button type="submit" class="btn btn-custom" onclick="addCategory()">Add Category</button>
+						
+						<button type="submit" class="btn btn-custom" onclick="addCategory()">Add Product</button>
 						<button type="button" class="btn btn-secondary" onclick="showSection('CategorySection')">Cancel</button>
 					</form>
+				</section> -->
+				<section id="addCategoryForm" class="section">
+					<h2>Add Category</h2>
+					<form id="AddProduct">
+						<div class="mb-3">
+							<label for="productName" class="form-label">Category Name</label>
+							<input type="text" class="form-control" id="productName" name="name" required>
+						</div>
+						<div class="mb-3">
+							<label for="productImage" class="form-label">Category Image</label>
+							<input type="file" class="form-control" id="productImage" name="image" required>
+						</div>
+			
+						<div class="mb-3">
+							<label for="productDescription" class="form-label">Category Description</label>
+							<textarea class="form-control" id="productDescription" name="description" required></textarea>
+						</div>
+			
+						<button type="submit" class="btn btn-custom" onclick="addCategory()">Add Category</button>
+						<button type="button" class="btn btn-secondary" onclick="hideSection('addCategoryForm')">Cancel</button>
+					</form>
 				</section>
-            </div>
+			</div>
         </div>
       </main>
         <!-- Scripts -->
@@ -378,14 +420,12 @@
 
         productTable.innerHTML += `
           <tr>
-                        <td><img src="${element.image}" class="img-thumbnail" alt="category Image"></td>
+                        <td><img src="/back_end/E_Commerce_Clothes/Uploads/${element.image}" class="img-thumbnail" alt="category Image"></td>
                         <td>${element.name}</td>
                         <td>${element.description}</td>
-                        <td><span class="badge badge-active">Active</span></td>
                         <td class="action-icons">
                             <i class="fas fa-eye" ></i>
-                            <a href="EditProduct.html" class="btn btn-warning fas fa-pencil-alt" >Edit</a>
-                            <button class="btn btn-warning fas fa-pencil-alt" onclick="categoryEdit(${element.categoryId})">Edit</button>
+							<button class="btn btn-primary" onclick="showEditModal(${element.categoryId})">Edit Category</button>
                             <button class="btn btn-danger fas fa-trash" onclick="categoryDelete(${element.categoryId})">Delete</button>
                         </td>
                     </tr>
@@ -400,48 +440,88 @@
 	async  function categoryDelete(id) {
         debugger;
         
-            const urlDelete = `https://localhost:44367/api/AdminControllers/Product?id=${id}`;
+            const urlDelete = `https://localhost:44367/api/AdminControllers/Category?id=${id}`;
           await fetch(urlDelete, {
                     method: "DELETE",
                     
                 });
 
                 window.alert("Cart deleted successfully");
-        //   alert("Success")
         
         }
 
-        
-        async function addCategory(){
-            const url="https://localhost:44367/api/AdminControllers/Product";
-            var form=document.getElementById("AddProduct");
+ function categoryEdit(id){
 
-        event.preventDefault();
-        var formData= new FormData(form);
-        let response=await fetch(url,{
-            method:"POST",
-            body:formData,
-        });
-        var data=response;
+	localStorage.setItem("categoryId",id);
 
-        showSection('CategorySection');
 }
 
+		/*****************************************//*********************************/
+		    // Function to show modal
+			function showEditModal() {
+              var myModal = new bootstrap.Modal(document.getElementById('editCategoryModal'), {
+                  keyboard: false
+              });
+              myModal.show();
+          }
 
-async function categoryEdit(id){
+          var n = Number(localStorage.getItem("categoryId"));
+          const url = `https://localhost:44367/api/AdminControllers/Category?id=${n}`;
+          var form = document.getElementById("form");
 
-const url=`https://localhost:44367/api/AdminControllers/Product?id=${id}`;
+          async function EditCategory(event) {
+              event.preventDefault();
+              var formData = new FormData(form);
 
-var form=document.getElementById("form");
-    // هاي بتمنع يصير ريللود على صفحة ثانية
-event.preventDefault();
-var formData= new FormData(form);
-let response=await fetch(url,{
-    method:"PUT",
-    body:formData,
-});
-var data=await response.json();
-}
+              try {
+                  let response = await fetch(url, {
+                      method: "PUT",
+                      body: formData,
+                  });
+
+                  if (response.ok) {
+                      alert("Category edited successfully");
+                      // لا يتم تغيير الصفحة، الرسالة تظهر فقط
+                  } else {
+                      alert("Failed to edit the category. Please try again.");
+                  }
+              } catch (error) {
+                  alert("An error occurred while editing the category. Please try again.");
+              }
+          }
+
+
+		  /*****************************************************************/
+		   // دالة لإظهار القسم
+		   function showSection(sectionId) {
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // دالة لإخفاء القسم
+        function hideSection(sectionId) {
+            document.getElementById(sectionId).style.display = 'none';
+        }
+
+        // دالة لإضافة الفئة
+        async function addCategory() {
+            event.preventDefault();
+            const url = "https://localhost:44367/api/AdminControllers/Category";
+            var form = document.getElementById("AddProduct");
+            var formData = new FormData(form);
+
+            let response = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert("Category added successfully");
+                // إخفاء النموذج بعد إضافة الفئة
+                hideSection('addCategoryForm');
+            } else {
+                alert("Failed to add category");
+            }
+        }
 </script>
 <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/libs/feather-icons/dist/feather.min.js"></script>

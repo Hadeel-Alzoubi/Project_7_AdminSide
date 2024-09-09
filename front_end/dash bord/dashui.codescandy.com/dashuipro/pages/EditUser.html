@@ -23,30 +23,26 @@
                     <div class="card-body">
                         <h1>Edit Product</h1>
 
-                        <form id="form" onsubmit="EditProduct(event)">
+                        <form id="form" onsubmit="EditUser(event)">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">ProductName</label>
+                                <label for="exampleInputPassword1">Name</label>
                                 <input type="text" class="form-control" id="exampleInputPassword1" name="Name">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">ProductImage</label>
-                                <input type="file" class="form-control" id="exampleInputPassword1" name="Image">
+                                <label for="exampleInputPassword1">Email</label>
+                                <input type="email" class="form-control" id="exampleInputPassword1" name="Email">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Description</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="Description">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="Password">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Price</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="Price">
+                                <label for="exampleInputPassword1">Address</label>
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="Address">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Brand</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="Brand">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">PriceWithDiscount</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="PriceWithDiscount">
+                                <label for="exampleInputPassword1">PhoneNumber</label>
+                                <input type="number" class="form-control" id="exampleInputPassword1" name="PhoneNumber">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -59,14 +55,14 @@
     </div>
 
     <script>
-        var n = Number(localStorage.getItem("productId"));
+        var n = Number(localStorage.getItem("userId"));
         console.log(n);
 
-        const url = `https://localhost:44367/api/AdminControllers/Product?id=${n}`;
+        const url = `https://localhost:44367/api/AdminControllers/User?id=${n}`;
 
         var form = document.getElementById("form");
 
-        async function EditProduct(event) {
+        async function EditUser(event) {
             event.preventDefault();
             var formData = new FormData(form);
             
@@ -86,16 +82,16 @@
                         console.log("Response data:", data);
                     }
 
-                    alert("Product edit successfully");
+                    alert("User edit successfully");
                     // Redirect to the edit page after success
-                    window.location.href = "ecommerce-product-edit.html";
+                    window.location.href = "ecommerce-user-list.html";
                 } else {
-                    console.error("Failed to edit the product. Status:", response.status);
-                    alert("Failed to edit the product. Please try again.");
+                    console.error("Failed to edit the User. Status:", response.status);
+                    alert("Failed to edit the User. Please try again.");
                 }
             } catch (error) {
-                console.error("Error while editing product:", error);
-                alert("An error occurred while editing the product. Please try again.");
+                console.error("Error while editing User:", error);
+                alert("An error occurred while editing the User. Please try again.");
             }
         }
     </script>

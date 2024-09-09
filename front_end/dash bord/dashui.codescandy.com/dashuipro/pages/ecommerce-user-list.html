@@ -184,6 +184,7 @@
 			</ul>
 		</div>
 	</div>
+</div>
        <!-- navbar vertical  -->
        <!-- Sidebar -->
 <div class="navbar-vertical navbar nav-dashboard">
@@ -225,7 +226,7 @@
 							<a class="nav-link has-arrow " href="ecommerce-product-edit.html">Product</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link has-arrow " href="ecommerce-category-edit.html">Category</a>
+							<a class="nav-link has-arrow " href="ecommerce-User-edit.html">Category</a>
 						</li>
 						<!-- <li class="nav-item">
 							<a class="nav-link has-arrow " href="ecommerce-order-list.html">Orders</a>
@@ -283,59 +284,56 @@
 
             <!-- Container fluid -->
             <div class="app-content-area">
-                <section id="productSection" class="section active">
-					<h2>Products</h2>
+                <section id="UserSectionSection" class="section active">
+					<h2>User</h2>
 					<div class="search-bar mb-3">
-
-						<button class="btn btn-custom" onclick="showSection('addProductForm')">+ Add Product</button>
-						<input type="search" class="form-control" placeholder="Search Products...">
+						<button class="btn btn-custom" onclick="showSection('addUserForm')">+ Add User</button>
+						<input type="search" class="form-control" placeholder="Search Users...">
 					</div>
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Category</th>
+								
 								<th>Name</th>
-								<th>Price</th>
-								<th>Action</th>
+								<th>Email</th>
+								<th>Password</th>
+                                <th>Address</th>
+                                <th>Phone Number</th>
+                                <th>Actions</th>
 							</tr>
 						</thead>
-						<tbody id="product">
+						<tbody id="UserGet">
 						  
 						</tbody>
 					</table>
 				</section>
-
 				<!-- Add Product -->
-				<section id="addProductForm" class="section">
-					<h2>Add Product</h2>
-					<form id="AddProduct">
+				<section id="addUserForm" class="section">
+					<h2>Add User</h2>
+					<form id="AddUser">
 						<div class="mb-3">
-							<label for="productName" class="form-label">Product Name</label>
-							<input type="text" class="form-control" id="productName" name="Name">
+							<label for="UserName" class="form-label">User Name</label>
+							<input type="text" class="form-control" id="UserName" name="Name">
+						</div>
+					
+						<div class="mb-3">
+							<label for="UserDescription" class="form-label">User Email</label>
+							<input type="email" class="form-control" id="UserDescription" name="Email"></input>
 						</div>
 						<div class="mb-3">
-							<label for="productImage" class="form-label">Product Image</label>
-							<input type="file" class="form-control" id="productImage" name="Image">
+							<label for="UserDescription" class="form-label">User Password</label>
+							<input type="password" class="form-control" id="UserDescription" name="Password"></input>
 						</div>
-						<div class="mb-3">
-							<label for="productPrice" class="form-label">Product Price</label>
-							<input type="number" class="form-control" id="productPrice" name="Price">
+                        <div class="mb-3">
+							<label for="UserDescription" class="form-label">User Address</label>
+							<input type="text" class="form-control" id="UserDescription" name="Address"></input>
 						</div>
-						<div class="mb-3">
-							<label for="productDescription" class="form-label">Product Description</label>
-							<textarea class="form-control" id="productDescription" name="Description"></textarea>
+                        <div class="mb-3">
+							<label for="UserDescription" class="form-label">User PhoneNumber</label>
+							<input type="number" class="form-control" id="UserDescription" name="PhoneNumber"></input >
 						</div>
-						<div class="mb-3">
-							<label for="productDiscount" class="form-label">Product Discount</label>
-							<input type="number" class="form-control" id="productDiscount" name="PriceWithDiscount">
-						</div>
-						<div class="mb-3">
-							<label for="productBrand" class="form-label" name="Brand">Product Brand</label>
-							<input type="text" class="form-control" id="productBrand">
-						</div>
-						<button type="submit" class="btn btn-custom" onclick="addproduct()">Add Product</button>
-						<button type="button" class="btn btn-secondary" onclick="showSection('productSection')">Cancel</button>
+						<button type="submit" class="btn btn-custom" onclick="addUser()">Add User</button>
+						<button type="button" class="btn btn-secondary" onclick="showSection('UserSectionSection')">Cancel</button>
 					</form>
 				</section>
             </div>
@@ -366,25 +364,28 @@
     activeSection.classList.add('active');
     activeSection.style.display = 'block'; // عرض القسم
 }
-	  async function productGet()
+	  async function UserGet()
     {
-        const url = 'https://localhost:44367/api/AdminControllers/ProductAll';
+        debugger;
+        const url = 'https://localhost:44367/api/AdminControllers/User';
         let response = await fetch(url);
         let data = await response.json();
 
-        let productTable = document.getElementById('product');
+        let productTable = document.getElementById('UserGet');
         data.forEach(element =>
 
         productTable.innerHTML += `
           <tr>
-                        <td><img src="${element.image}" class="img-thumbnail" alt="Product Image"></td>
-                        <td>${element.brand}</td>
                         <td>${element.name}</td>
-                        <td>${element.price}</td>
+                        <td>${element.email}</td>
+                         <td>${element.Password}</td>
+                        <td>${element.address}</td>
+                        <td>${element.phoneNumber}</td>
+                       
                         <td class="action-icons">
-                            <i class="fas fa-eye" ></i>
-                            <button class="btn btn-danger fas fa-primary" onclick="EditProduct(${element.productId})">Edit</button>
-                            <button class="btn btn-danger fas fa-trash" onclick="productDelete(${element.productId})">Delete</button>
+                     
+                        <button class="btn btn-danger fas fa-trash" onclick="UserEdit(${element.userId})">Edit</button>
+                        <button class="btn btn-danger fas fa-trash" onclick="UserDelete(${element.userId})">Delete</button>
                         </td>
                     </tr>
 
@@ -393,12 +394,12 @@
 
         )
     }
-    productGet();
+    UserGet();
 
-	async  function productDelete(id) {
+	async  function UserDelete(id) {
         debugger;
         
-            const urlDelete = `https://localhost:44367/api/AdminControllers/Product?id=${id}`;
+            const urlDelete = `https://localhost:44367/api/AdminControllers/User?id=${id}`;
           await fetch(urlDelete, {
                     method: "DELETE",
                     
@@ -410,64 +411,38 @@
         }
 
         
-//         async function addproduct(){
-//             const url="https://localhost:44367/api/AdminControllers/Product";
-//             var form=document.getElementById("AddProduct");
+        async function addUser(){
+            debugger;
+            const url="https://localhost:44367/api/AdminControllers/USer";
+            var form=document.getElementById("AddUser");
 
-//         event.preventDefault();
-//         var formData= new FormData(form);
-//         let response=await fetch(url,{
-//             method:"POST",
-//             body:formData,
-//         });
-//         var data=response;
+        event.preventDefault();
+        var formData= new FormData(form);
+        let response=await fetch(url,{
+            method:"POST",
+            body:formData,
+        });
+        var data=response;
 
-//         showSection('productSection');
-// }
-
-
- function EditProduct(id){
-
-localStorage.setItem("productId",id);
-window.location.href="EditProduct.html";
-
+        showSection('UserSection');
 }
 
-//*************************************************************************************************///
 
-  // Function to show modal
-  function showAddModal() {
-              var myModal = new bootstrap.Modal(document.getElementById('editCategoryModal'), {
-                  keyboard: false
-              });
-              myModal.show();
-          }
+async function UserEdit(id){
+    localStorage.setItem("userId",id);
+    window.location.href="EditUser.html";
+// const url=`https://localhost:44367/api/AdminControllers/User?id=${id}`;
 
-          var n = Number(localStorage.getItem("categoryId"));
-          const url = `https://localhost:44367/api/AdminControllers/Category?id=${n}`;
-          var form = document.getElementById("form");
-
-          async function EditCategory(event) {
-              event.preventDefault();
-              var formData = new FormData(form);
-
-              try {
-                  let response = await fetch(url, {
-                      method: "PUT",
-                      body: formData,
-                  });
-
-                  if (response.ok) {
-                      alert("Category edited successfully");
-                      // لا يتم تغيير الصفحة، الرسالة تظهر فقط
-                  } else {
-                      alert("Failed to edit the category. Please try again.");
-                  }
-              } catch (error) {
-                  alert("An error occurred while editing the category. Please try again.");
-              }
-          }
-
+// var form=document.getElementById("form");
+//     // هاي بتمنع يصير ريللود على صفحة ثانية
+// event.preventDefault();
+// var formData= new FormData(form);
+// let response=await fetch(url,{
+//     method:"PUT",
+//     body:formData,
+// });
+// var data=await response.json();
+}
 </script>
 <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/libs/feather-icons/dist/feather.min.js"></script>

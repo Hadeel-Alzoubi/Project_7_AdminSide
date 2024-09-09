@@ -138,11 +138,7 @@
 				</li>
 				<!-- List -->
 				<li class="dropdown ms-2">
-					<a class="rounded-circle" href="#!" role="button" id="dropdownUser" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<div class="avatar avatar-md avatar-indicators avatar-online">
-							<img id="img" alt="avatar" src="../assets/images/avatar/avatar-11.jpg" class="rounded-circle" />
-						</div>
-					</a>
+					
 					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
 						<div class="px-4 pb-0 pt-2">
 							<div class="lh-1">
@@ -283,96 +279,34 @@
 		<form  id="formProfil" >
         <!-- Container fluid -->
         <div class="app-content-area">
-          <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                  <!-- Page header -->
-                    <div class=" mb-5">
-                        <h3 class="mb-0 fw-bold">General</h3>
-                    </div>
-                </div>
-              </div>
-              <div class="row mb-8">
-               
-                <div class="col-xl-9 col-lg-8 col-md-12 col-12">
-                  <!-- card -->
-                  <div class="card">
-                    <!-- card body -->
-                    <div class="card-body">
-                      <div class=" mb-6">
-                        <h4 class="mb-1">General Settings</h4>
-                      </div>
-                      <div class="row align-items-center mb-8">
-                        <div class="col-md-3 mb-3 mb-md-0">
-                          <h5 class="mb-0">Avatar</h5>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="d-flex align-items-center mb-4">
-                                <div >
-									<input type="file" id="img" name="Img" />
-                                    <!-- <img class="image  avatar avatar-lg rounded-circle" src="../assets/images/avatar/avatar-11.jpg" alt="Image"> -->
-                                  </div>
-                             
-                                  <!-- <input type="file" class="file-input opacity-0">Upload Photo -->
-                                </div>
-                              </div>
-                        </div>
-                      </div>
-                      <!-- col -->
-                      <div>
-                        <!-- border -->
-                        <div class="mb-6">
-                          <h4 class="mb-1">information</h4>
-                        </div>
-                        <form>
-                          <!-- row -->
-                          <div class="mb-3 row">
-                            <label for="fullName" class="col-sm-4 col-form-label
-                                form-label">Full name</label>
-                            <div class="col-sm-4 mb-3 mb-lg-0">
-                              <input type="text" class="form-control" placeholder="First name" id="fullName" name="Name" required>
-                            </div>
-                            <div class="col-sm-4">
-                              <input type="text" class="form-control" placeholder="Last name" id="lastName" required>
-                            </div>
-                          </div>
-                          <!-- row -->
-                          <div class="mb-3 row">
-                            <label for="email" class="col-sm-4 col-form-label
-                                form-label">Email</label>
-                            <div class="col-md-8 col-12">
-                              <input type="email" class="form-control" placeholder="Admin@Example.com" id="email" name="Email" readonly>
-                            </div>
-                          </div>
-                          <!-- row -->
-                          <div class="mb-3 row">
-                            <label for="addressLine" class="col-sm-4 col-form-label
-                                form-label">Address</label>
-                            <div class="col-md-8 col-12">
-                              <input type="text" class="form-control" placeholder="Placeholder" id="addressLine" required>
-                            </div>
-                          </div>
-                          <!-- row -->
-                          <div class="row align-items-center">
-                            <label for="zipcode" class="col-sm-4 col-form-label
-                                form-label">Phone No.</label>
-                            <div class="col-md-8 col-12">
-                              <input type="number" class="form-control" placeholder="phone number" id="phone" required>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+         
               <div class="row mb-8">
                 
                 <div class="col-xl-9 col-lg-8 col-md-12 col-12">
                   <!-- card -->
                   <div class="card" id="edit">
+						
                     <!-- card body -->
                     <div class="card-body">
+						<!-- row -->
+						<div class="mb-3 row">
+							<label for="fullName" class="col-sm-4 col-form-label
+								form-label">Full name</label>
+							<div class="col-sm-4 mb-3 mb-lg-0">
+							  <input type="text" class="form-control" placeholder="First name" id="fullName" name="Name" required>
+							</div>
+							<div class="col-sm-4">
+							  <input type="text" class="form-control" placeholder="Last name" id="lastName" required>
+							</div>
+						  </div>
+						  <!-- row -->
+						  <div class="mb-3 row">
+							<label for="email" class="col-sm-4 col-form-label
+								form-label">Email</label>
+							<div class="col-md-8 col-12">
+							  <input type="email" class="form-control" placeholder="Admin@Example.com" id="emaillll" name="Email" readonly>
+							</div>
+						  </div>
                       <div class="mb-6 mt-6">
                         <h4 class="mb-1">Change your password</h4>
                       </div>
@@ -413,11 +347,6 @@
                               </li>
                             </ul>
                             
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 			<button type="submit" class="btn btn-primary" onclick="EditCategory()" >Save
@@ -439,7 +368,7 @@
  async function EditCategory() {
     // Prevent form submission from reloading the page
     
-    
+    debugger;
     // Get the form element
     var form = document.getElementById("formProfil");
 
@@ -451,9 +380,8 @@
     
     // Log formData to check content (for debugging purposes)
     console.log(formData);
-    console.log(formData.get("Img"));  // Ensure the image field has correct name
     
-    try {
+   
         // Send the PUT request with the form data
         let response = await fetch(url, {
             method: "PUT",
@@ -461,20 +389,10 @@
         });
 
         // Check if the response is OK
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        // Parse the JSON response
         var data = await response.json(); 
         
         // Handle the data (log it for now)
         console.log(data);
-
-    } catch (error) {
-        // Log any errors that occur during the fetch
-        console.error("Error occurred during fetch:", error);
-    }
 }
 
 </script>

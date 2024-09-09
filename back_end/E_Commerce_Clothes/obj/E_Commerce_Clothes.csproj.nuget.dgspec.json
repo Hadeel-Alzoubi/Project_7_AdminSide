@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Orange\\Desktop\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj": {}
+    "C:\\Users\\Orange\\Desktop\\Project_7_AdminSide\\back_end\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Orange\\Desktop\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj": {
+    "C:\\Users\\Orange\\Desktop\\Project_7_AdminSide\\back_end\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Orange\\Desktop\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj",
+        "projectUniqueName": "C:\\Users\\Orange\\Desktop\\Project_7_AdminSide\\back_end\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj",
         "projectName": "E_Commerce_Clothes",
-        "projectPath": "C:\\Users\\Orange\\Desktop\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj",
+        "projectPath": "C:\\Users\\Orange\\Desktop\\Project_7_AdminSide\\back_end\\E_Commerce_Clothes\\E_Commerce_Clothes.csproj",
         "packagesPath": "C:\\Users\\Orange\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Orange\\Desktop\\E_Commerce_Clothes\\E_Commerce_Clothes\\E_Commerce_Clothes\\obj\\",
+        "outputPath": "C:\\Users\\Orange\\Desktop\\Project_7_AdminSide\\back_end\\E_Commerce_Clothes\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
